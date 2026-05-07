@@ -1,0 +1,72 @@
+"use client";
+
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import {
+  initialDreamActionState,
+  submitDreamAction,
+} from "@/app/actions/dream-actions";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { WandSparkles } from "lucide-react";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className="h-12 w-full bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-base font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60"
+    >
+      <WandSparkles className="mr-2 h-5 w-5" />
+      {pending ? "Yorumlaniyor..." : "Ruyami Yorumla"}
+    </Button>
+  );
+}
+
+export function DreamForm() {
+  const [state, formAction] = useActionState(
+    submitDreamAction,
+    initialDreamActionState
+  );
+
+  return (
+    <form action={formAction} className="mt-8 space-y-4">
+      <Textarea
+        name="dreamText"
+        required
+        minLength={10}
+        className="min-h-52 resize-none border-[#3f3268] bg-[#0f0c1f]/85 text-zinc-100 placeholder:text-zinc-500 focus-visible:ring-[#9f79ff]"
+        placeholder="Bu gece gordugun ruyayi detaylariyla yaz..."
+      />
+      <SubmitButton />
+
+      {state.error ? (
+        <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+          {state.error}
+        </p>
+      ) : null}
+
+      {state.interpretation ? (
+        <div className="space-y-3 rounded-2xl border border-[#3e3265] bg-[#0d0a1a]/90 p-4">
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-lg font-semibold text-white">Yorum Sonucu</h3>
+            <Badge className="border-[#efc66a]/50 bg-[#efc66a]/10 text-[#f3d486]">
+              {state.category}
+            </Badge>
+          </div>
+          <p className="text-sm leading-relaxed text-zinc-300">
+            {state.interpretation}
+          </p>
+          <p className="text-xs text-zinc-400">
+            {state.saved
+              ? "Supabase'e basariyla kaydedildi."
+              : "Sadece ekranda gosterildi (veritabani kaydi yok)."}
+          </p>
+        </div>
+      ) : null}
+    </form>
+  );
+}

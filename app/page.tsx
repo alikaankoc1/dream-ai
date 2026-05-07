@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { DreamForm } from "@/components/dream-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { MoonStar, Sparkles, Stars, WandSparkles } from "lucide-react";
+import { MoonStar, Sparkles, Stars } from "lucide-react";
 
 export default function Home() {
   const sampleDreams = [
@@ -31,16 +30,7 @@ export default function Home() {
               sana derin bir yorum sunsun.
             </p>
           </div>
-          <div className="mt-8 space-y-4">
-            <Textarea
-              className="min-h-52 resize-none border-[#3f3268] bg-[#0f0c1f]/85 text-zinc-100 placeholder:text-zinc-500 focus-visible:ring-[#9f79ff]"
-              placeholder="Bu gece gördüğün rüyayı detaylarıyla yaz..."
-            />
-            <Button className="h-12 w-full bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-base font-semibold text-[#090714] transition hover:opacity-95">
-              <WandSparkles className="mr-2 h-5 w-5" />
-              Rüyamı Yorumla
-            </Button>
-          </div>
+          <DreamForm />
         </section>
 
         <section className="space-y-5">
