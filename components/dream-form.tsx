@@ -2,10 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import {
-  initialDreamActionState,
-  submitDreamAction,
-} from "@/app/actions/dream-actions";
+import { submitDreamAction, type DreamActionState } from "@/app/actions/dream-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,6 +24,13 @@ function SubmitButton() {
 }
 
 export function DreamForm() {
+  const initialDreamActionState: DreamActionState = {
+    interpretation: "",
+    category: "",
+    error: null,
+    saved: false,
+  };
+
   const [state, formAction] = useActionState(
     submitDreamAction,
     initialDreamActionState

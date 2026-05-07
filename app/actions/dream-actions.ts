@@ -10,13 +10,6 @@ export type DreamActionState = {
   saved: boolean;
 };
 
-export const initialDreamActionState: DreamActionState = {
-  interpretation: "",
-  category: "",
-  error: null,
-  saved: false,
-};
-
 export async function submitDreamAction(
   _prevState: DreamActionState,
   formData: FormData
@@ -25,8 +18,10 @@ export async function submitDreamAction(
 
   if (!dreamText) {
     return {
-      ...initialDreamActionState,
+      interpretation: "",
+      category: "",
       error: "Lutfen bir ruya metni gir.",
+      saved: false,
     };
   }
 
@@ -63,7 +58,8 @@ export async function submitDreamAction(
         : "Yorum olusturulurken beklenmeyen bir sorun olustu.";
 
     return {
-      ...initialDreamActionState,
+      interpretation: "",
+      category: "",
       error: `Su an yorum olusturulamadi. Lutfen tekrar dene. (${errorMessage})`,
       saved: false,
     };
