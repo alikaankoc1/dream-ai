@@ -15,7 +15,7 @@ function SubmitButton() {
     <Button
       type="submit"
       disabled={pending}
-      className="h-12 w-full bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-base font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60"
+      className="h-11 w-full rounded-xl bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-sm font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60 sm:h-12 sm:text-base"
     >
       <WandSparkles className="mr-2 h-5 w-5" />
       {pending ? "Yukleniyor..." : "Ruyami Yorumla"}
@@ -37,31 +37,33 @@ export function DreamForm() {
   );
 
   return (
-    <form action={formAction} className="mt-8 space-y-4">
+    <form action={formAction} className="mt-6 space-y-3 sm:mt-8 sm:space-y-4">
       <Textarea
         name="dreamText"
         required
         minLength={10}
-        className="min-h-52 resize-none border-[#3f3268] bg-[#0f0c1f]/85 text-zinc-100 placeholder:text-zinc-500 focus-visible:ring-[#9f79ff]"
+        className="min-h-40 resize-none rounded-xl border-[#3f3268] bg-[#0f0c1f]/85 px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-base"
         placeholder="Bu gece gordugun ruyayi detaylariyla yaz..."
       />
       <SubmitButton />
 
       {state.error ? (
-        <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+        <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
           {state.error}
         </p>
       ) : null}
 
       {state.interpretation ? (
-        <div className="space-y-3 rounded-2xl border border-[#4a3d78] bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 shadow-[0_0_32px_rgba(110,80,190,0.2)]">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="text-lg font-semibold text-white">Yorum Sonucu</h3>
+        <div className="space-y-3 rounded-xl border border-[#4a3d78] bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 shadow-[0_0_32px_rgba(110,80,190,0.2)] sm:rounded-2xl sm:p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="text-base font-semibold text-white sm:text-lg">
+              Yorum Sonucu
+            </h3>
             <Badge className="border-[#efc66a]/50 bg-[#efc66a]/10 text-[#f3d486]">
               {state.category}
             </Badge>
           </div>
-          <p className="text-sm leading-relaxed text-zinc-300">
+          <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">
             {state.interpretation}
           </p>
           <p className="text-xs text-zinc-400">

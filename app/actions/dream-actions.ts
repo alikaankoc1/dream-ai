@@ -32,15 +32,13 @@ export async function submitDreamAction(
       dream_text: dreamText,
       interpretation: dreamInsight.interpretation,
       category: dreamInsight.category,
-      user_id: null,
     });
 
     if (error) {
       return {
         interpretation: dreamInsight.interpretation,
         category: dreamInsight.category,
-        error:
-          "Yorum uretildi, fakat veritabani kaydi sirasinda bir sorun yasandi.",
+        error: `Yorum uretildi, fakat veritabani kaydi sirasinda bir sorun yasandi. (${error.message})`,
         saved: false,
       };
     }

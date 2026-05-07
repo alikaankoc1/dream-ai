@@ -27,6 +27,12 @@ const FALLBACK_INSIGHT: DreamInsight = {
     "Bu ruyayi su an net yorumlayamadim. Biraz daha detay eklersen daha iyi bir analiz sunabilirim.",
 };
 
+const DEFAULT_MODEL_CANDIDATES = [
+  "gemini-2.0-flash",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash-latest",
+];
+
 function sanitizeCategory(rawCategory?: string): DreamCategory {
   const allowed: DreamCategory[] = [
     "Kisisel Gelisim",
@@ -71,7 +77,10 @@ export async function analyzeDreamWithGemini({
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const configuredModel = process.env.GOOGLE_GEMINI_MODEL?.trim();
+  const modelCandidates = configuredModel
+    ? [configuredModel, ...DEFAULT_MODEL_CANDIDATES]
+    : DEFAULT_MODEL_CANDIDATES;
 
   const prompt = `
 Sen bilge bir ruya yorumcususun. Sadece gecerli JSON dondur, ekstra metin ekleme.
@@ -86,16 +95,29 @@ Ruya:
 """${dreamText}"""
 `;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text().trim();
-  const parsed = parseGeminiJson(text);
+  let lastError: unknown;
 
-  if (!parsed?.interpretation) {
-    return FALLBACK_INSIGHT;
+  for (const modelName of modelCandidates) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const text = result.response.text().trim();
+      const parsed = parseGeminiJson(text);
+
+      if (!parsed?.interpretation) {
+        return FALLBACK_INSIGHT;
+      }
+
+      return {
+        category: sanitizeCategory(parsed.category),
+        interpretation: parsed.interpretation.trim(),
+      };
+    } catch (error) {
+      lastError = error;
+    }
   }
 
-  return {
-    category: sanitizeCategory(parsed.category),
-    interpretation: parsed.interpretation.trim(),
-  };
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Gemini modeline erisilemedi.");
 }
