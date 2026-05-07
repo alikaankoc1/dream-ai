@@ -21,7 +21,7 @@ function SubmitButton() {
       className="h-12 w-full bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-base font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60"
     >
       <WandSparkles className="mr-2 h-5 w-5" />
-      {pending ? "Yorumlaniyor..." : "Ruyami Yorumla"}
+      {pending ? "Yukleniyor..." : "Ruyami Yorumla"}
     </Button>
   );
 }
@@ -50,7 +50,7 @@ export function DreamForm() {
       ) : null}
 
       {state.interpretation ? (
-        <div className="space-y-3 rounded-2xl border border-[#3e3265] bg-[#0d0a1a]/90 p-4">
+        <div className="space-y-3 rounded-2xl border border-[#4a3d78] bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 shadow-[0_0_32px_rgba(110,80,190,0.2)]">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-lg font-semibold text-white">Yorum Sonucu</h3>
             <Badge className="border-[#efc66a]/50 bg-[#efc66a]/10 text-[#f3d486]">

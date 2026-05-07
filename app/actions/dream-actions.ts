@@ -1,5 +1,6 @@
 "use server";
 
+import { analyzeDreamWithGemini } from "@/lib/gemini";
 import { createServerSupabaseClient } from "@/utils/supabase/server";
 
 export type DreamActionState = {
@@ -16,16 +17,6 @@ export const initialDreamActionState: DreamActionState = {
   saved: false,
 };
 
-function createMockInterpretation(dreamText: string) {
-  return {
-    category: "Spirituel",
-    interpretation: `Ruyanda gecen imgeler (ilk kelimeler: ${dreamText
-      .split(/\s+/)
-      .slice(0, 8)
-      .join(" ")}) icsel arayis, belirsizlik ve degisim temasina isaret ediyor.`,
-  };
-}
-
 export async function submitDreamAction(
   _prevState: DreamActionState,
   formData: FormData
@@ -39,38 +30,41 @@ export async function submitDreamAction(
     };
   }
 
-  const mock = createMockInterpretation(dreamText);
-
   try {
+    const dreamInsight = await analyzeDreamWithGemini({ dreamText });
     const supabase = createServerSupabaseClient();
     const { error } = await supabase.from("dreams").insert({
       dream_text: dreamText,
-      interpretation: mock.interpretation,
-      category: mock.category,
+      interpretation: dreamInsight.interpretation,
+      category: dreamInsight.category,
       user_id: null,
     });
 
     if (error) {
       return {
-        interpretation: mock.interpretation,
-        category: mock.category,
-        error: `Yorum uretildi ama kayit sirasinda hata olustu: ${error.message}`,
+        interpretation: dreamInsight.interpretation,
+        category: dreamInsight.category,
+        error:
+          "Yorum uretildi, fakat veritabani kaydi sirasinda bir sorun yasandi.",
         saved: false,
       };
     }
 
     return {
-      interpretation: mock.interpretation,
-      category: mock.category,
+      interpretation: dreamInsight.interpretation,
+      category: dreamInsight.category,
       error: null,
       saved: true,
     };
-  } catch {
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Yorum olusturulurken beklenmeyen bir sorun olustu.";
+
     return {
-      interpretation: mock.interpretation,
-      category: mock.category,
-      error:
-        "Yorum uretildi ancak Supabase baglantisi kurulamadigi icin kaydedilemedi.",
+      ...initialDreamActionState,
+      error: `Su an yorum olusturulamadi. Lutfen tekrar dene. (${errorMessage})`,
       saved: false,
     };
   }
