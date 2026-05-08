@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { DreamForm } from "@/components/dream-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MoonStar, Sparkles, Stars } from "lucide-react";
+import { Globe, MoonStar, Sparkles, Stars } from "lucide-react";
 
 export default function Home() {
   const sampleDreams = [
@@ -130,6 +130,15 @@ export default function Home() {
               >
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.026-3.037-1.852-3.037-1.854 0-2.137 1.445-2.137 2.939v5.667H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.369-1.85 3.599 0 4.264 2.368 4.264 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065a2.064 2.064 0 114.127 0 2.065 2.065 0 01-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
               </svg>
+            </a>
+            <a
+              href="https://alikaankoc.netlify.app"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Kişisel web sitesi"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#3b2f63] bg-[#15112b]/70 text-zinc-200 transition hover:border-[#7f63d4] hover:text-white"
+            >
+              <Globe className="h-4 w-4" />
             </a>
           </div>
         </div>
