@@ -186,9 +186,20 @@ export function DreamForm() {
           className={`space-y-3 rounded-xl border bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 sm:rounded-2xl sm:p-5 ${currentMoodStyle.border} ${currentMoodStyle.glow}`}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="text-xl font-semibold tracking-tight text-[#f8f4ff] sm:text-2xl">
-              Yorum Sonucu
-            </h3>
+            <div className="flex items-center gap-3">
+              <h3 className="text-xl font-semibold tracking-tight text-[#f8f4ff] sm:text-2xl">
+                Yorum Sonucu
+              </h3>
+              <Button
+                type="button"
+                onClick={handleShareDownload}
+                disabled={isDownloading}
+                className="h-8 rounded-full border border-[#4e3f82]/70 bg-[#17132d]/70 px-3 text-xs font-medium text-zinc-200 hover:bg-[#211a40] hover:text-white sm:h-9 sm:text-sm"
+              >
+                <Download className="mr-1.5 h-3.5 w-3.5" />
+                {isDownloading ? "Hazırlanıyor..." : "Görseli İndir"}
+              </Button>
+            </div>
             <div className="flex flex-wrap items-center gap-2">
               <Badge className="h-8 px-3 text-sm font-semibold tracking-wide border-[#efc66a]/60 bg-[#efc66a]/18 text-[#ffefc6] shadow-[0_0_18px_rgba(239,198,106,0.35)]">
                 {state.category}
@@ -198,18 +209,6 @@ export function DreamForm() {
               ) : null}
             </div>
           </div>
-
-          <div className="flex justify-end">
-            <Button
-              type="button"
-              onClick={handleShareDownload}
-              disabled={isDownloading}
-              className="h-10 rounded-lg border border-[#3f3268] bg-[#1a1533]/90 px-4 text-sm font-semibold text-zinc-100 hover:bg-[#231c45]"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              {isDownloading ? "Hazırlanıyor..." : "Görsel Olarak İndir"}
-            </Button>
-            </div>
           <p className="text-base leading-relaxed text-zinc-100 sm:text-xl">
             <TypewriterText text={state.interpretation} />
           </p>
