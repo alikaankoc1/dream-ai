@@ -13,13 +13,13 @@ export type DreamActionState = {
 
 function isLikelyDreamText(input: string): boolean {
   const cleaned = input.trim().toLocaleLowerCase("tr-TR");
-  if (cleaned.length < 20) return false;
+  if (cleaned.length < 8) return false;
 
   const words = cleaned.split(/\s+/).filter(Boolean);
-  if (words.length < 3) return false;
+  if (words.length < 2) return false;
 
   const lettersOnly = cleaned.replace(/[^a-zçğıöşü]/g, "");
-  if (lettersOnly.length < 15) return false;
+  if (lettersOnly.length < 6) return false;
 
   const vowelMatches = lettersOnly.match(/[aeıioöuü]/g) ?? [];
   const vowelRatio = vowelMatches.length / lettersOnly.length;
@@ -32,7 +32,7 @@ function isLikelyDreamText(input: string): boolean {
   const meaningfulWordCount = words.filter(
     (word) => word.length >= 2 && /[aeıioöuü]/i.test(word)
   ).length;
-  return meaningfulWordCount / words.length >= 0.7;
+  return meaningfulWordCount / words.length >= 0.6;
 }
 
 export async function submitDreamAction(
@@ -57,7 +57,7 @@ export async function submitDreamAction(
       category: "",
       mood: "",
       error:
-        "Lütfen daha anlaşılır ve detaylı bir rüya metni yaz. Rastgele harflerden oluşan girdiler yorumlanamaz.",
+        "Lütfen anlaşılır bir rüya metni yaz. Çok kısa veya rastgele harflerden oluşan girdiler yorumlanamaz.",
       saved: false,
     };
   }
