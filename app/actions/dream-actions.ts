@@ -6,6 +6,7 @@ import { createServerSupabaseClient } from "@/utils/supabase/server";
 export type DreamActionState = {
   interpretation: string;
   category: string;
+  mood: string;
   error: string | null;
   saved: boolean;
 };
@@ -20,6 +21,7 @@ export async function submitDreamAction(
     return {
       interpretation: "",
       category: "",
+      mood: "",
       error: "Lütfen bir rüya metni gir.",
       saved: false,
     };
@@ -38,6 +40,7 @@ export async function submitDreamAction(
       return {
         interpretation: dreamInsight.interpretation,
         category: dreamInsight.category,
+        mood: dreamInsight.mood,
         error: `Yorum üretildi, fakat veritabanı kaydı sırasında bir sorun yaşandı. (${error.message})`,
         saved: false,
       };
@@ -46,6 +49,7 @@ export async function submitDreamAction(
     return {
       interpretation: dreamInsight.interpretation,
       category: dreamInsight.category,
+      mood: dreamInsight.mood,
       error: null,
       saved: true,
     };
@@ -58,6 +62,7 @@ export async function submitDreamAction(
     return {
       interpretation: "",
       category: "",
+      mood: "",
       error: `Şu an yorum oluşturulamadı. Lütfen tekrar dene. (${errorMessage})`,
       saved: false,
     };

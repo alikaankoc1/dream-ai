@@ -9,6 +9,7 @@ export type DreamCategory =
 
 export type DreamInsight = {
   category: DreamCategory;
+  mood: string;
   interpretation: string;
 };
 
@@ -18,11 +19,13 @@ type AnalyzeDreamInput = {
 
 type GeminiDreamResponse = {
   category?: string;
+  mood?: string;
   interpretation?: string;
 };
 
 const FALLBACK_INSIGHT: DreamInsight = {
   category: "Bilinmeyen",
+  mood: "Gizem / Bilinmezlik",
   interpretation:
     "Bu rüyayı şu an net yorumlayamadım. Biraz daha detay eklersen daha iyi bir analiz sunabilirim.",
 };
@@ -88,6 +91,7 @@ Sen bilge bir rüya yorumcususun. Sadece geçerli JSON döndür, ekstra metin ek
 JSON şeması:
 {
   "category": "Kisisel Gelisim | Kaygi | Iliski | Spirituel | Bilinmeyen",
+  "mood": "Kaygı / Endişe | Huzur / Mutluluk | Korku / Kabus | Gizem / Bilinmezlik | Aşk / Romantizm | Yalnızlık / Hüzün | Macera / Heyecan | Aydınlanma / Farkındalık | Nostalji / Özlem",
   "interpretation": "2-4 cümlelik derin ama kibar bir rüya yorumu"
 }
 
@@ -110,6 +114,7 @@ Rüya:
 
       return {
         category: sanitizeCategory(parsed.category),
+        mood: parsed.mood?.trim() || FALLBACK_INSIGHT.mood,
         interpretation: parsed.interpretation.trim(),
       };
     } catch (error) {

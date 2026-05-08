@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { useFormStatus } from "react-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { submitDreamAction, type DreamActionState } from "@/app/actions/dream-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,10 +24,83 @@ function SubmitButton() {
   );
 }
 
+function TypewriterText({ text }: { text: string }) {
+  const words = useMemo(() => text.split(" ").filter(Boolean), [text]);
+  const [visibleWordCount, setVisibleWordCount] = useState(0);
+
+  useEffect(() => {
+    if (!words.length) return;
+
+    const intervalId = window.setInterval(() => {
+      setVisibleWordCount((currentCount) => {
+        if (currentCount >= words.length) {
+          window.clearInterval(intervalId);
+          return currentCount;
+        }
+
+        return currentCount + 1;
+      });
+    }, 80);
+
+    return () => window.clearInterval(intervalId);
+  }, [words]);
+
+  return <>{words.slice(0, visibleWordCount).join(" ")}</>;
+}
+
+const moodStyles: Record<string, { border: string; glow: string; badge: string }> = {
+  "Kaygı / Endişe": {
+    border: "border-[#7f63d4]",
+    glow: "shadow-[0_0_32px_rgba(127,99,212,0.35)]",
+    badge: "border-[#b499ff]/50 bg-[#b499ff]/10 text-[#d3c1ff]",
+  },
+  "Huzur / Mutluluk": {
+    border: "border-[#e5b95e]",
+    glow: "shadow-[0_0_32px_rgba(229,185,94,0.32)]",
+    badge: "border-[#f3d486]/50 bg-[#f3d486]/10 text-[#f7e2aa]",
+  },
+  "Korku / Kabus": {
+    border: "border-[#a23d55]",
+    glow: "shadow-[0_0_32px_rgba(162,61,85,0.35)]",
+    badge: "border-[#dd7088]/50 bg-[#dd7088]/10 text-[#f2adbb]",
+  },
+  "Gizem / Bilinmezlik": {
+    border: "border-[#2f93b0]",
+    glow: "shadow-[0_0_32px_rgba(47,147,176,0.35)]",
+    badge: "border-[#63c9e5]/50 bg-[#63c9e5]/10 text-[#a6e7f8]",
+  },
+  "Aşk / Romantizm": {
+    border: "border-[#c27c9c]",
+    glow: "shadow-[0_0_32px_rgba(194,124,156,0.35)]",
+    badge: "border-[#e5aac6]/50 bg-[#e5aac6]/10 text-[#f6d3e3]",
+  },
+  "Yalnızlık / Hüzün": {
+    border: "border-[#8c94b8]",
+    glow: "shadow-[0_0_32px_rgba(140,148,184,0.32)]",
+    badge: "border-[#b0b8de]/50 bg-[#b0b8de]/10 text-[#d3d8ef]",
+  },
+  "Macera / Heyecan": {
+    border: "border-[#d87f3f]",
+    glow: "shadow-[0_0_32px_rgba(216,127,63,0.35)]",
+    badge: "border-[#f3a56d]/50 bg-[#f3a56d]/10 text-[#ffd1ac]",
+  },
+  "Aydınlanma / Farkındalık": {
+    border: "border-[#d6d6e8]",
+    glow: "shadow-[0_0_32px_rgba(214,214,232,0.35)]",
+    badge: "border-[#eeeeff]/60 bg-[#eeeeff]/10 text-[#f8f8ff]",
+  },
+  "Nostalji / Özlem": {
+    border: "border-[#9b7a62]",
+    glow: "shadow-[0_0_32px_rgba(155,122,98,0.35)]",
+    badge: "border-[#c6a58d]/50 bg-[#c6a58d]/10 text-[#e8d4c4]",
+  },
+};
+
 export function DreamForm() {
   const initialDreamActionState: DreamActionState = {
     interpretation: "",
     category: "",
+    mood: "",
     error: null,
     saved: false,
   };
@@ -34,6 +108,12 @@ export function DreamForm() {
   const [state, formAction] = useActionState(
     submitDreamAction,
     initialDreamActionState
+  );
+  const currentMoodStyle =
+    moodStyles[state.mood] ?? moodStyles["Gizem / Bilinmezlik"];
+  const interpretationKey = useMemo(
+    () => `${state.category}-${state.mood}-${state.interpretation}`,
+    [state.category, state.mood, state.interpretation]
   );
 
   return (
@@ -53,26 +133,40 @@ export function DreamForm() {
         </p>
       ) : null}
 
+      <AnimatePresence mode="wait">
       {state.interpretation ? (
-        <div className="space-y-3 rounded-xl border border-[#4a3d78] bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 shadow-[0_0_32px_rgba(110,80,190,0.2)] sm:rounded-2xl sm:p-5">
+        <motion.div
+          key={interpretationKey}
+          initial={{ opacity: 0, y: -36 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ duration: 0.85, ease: "easeOut" }}
+          className={`space-y-3 rounded-xl border bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 sm:rounded-2xl sm:p-5 ${currentMoodStyle.border} ${currentMoodStyle.glow}`}
+        >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-base font-semibold text-white sm:text-lg">
               Yorum Sonucu
             </h3>
+            <div className="flex flex-wrap items-center gap-2">
             <Badge className="border-[#efc66a]/50 bg-[#efc66a]/10 text-[#f3d486]">
               {state.category}
             </Badge>
+            {state.mood ? (
+              <Badge className={currentMoodStyle.badge}>{state.mood}</Badge>
+            ) : null}
+            </div>
           </div>
           <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">
-            {state.interpretation}
+            <TypewriterText text={state.interpretation} />
           </p>
           <p className="text-xs text-zinc-400">
             {state.saved
               ? "Supabase'e başarıyla kaydedildi."
               : "Sadece ekranda gösterildi (veritabanı kaydı yok)."}
           </p>
-        </div>
+        </motion.div>
       ) : null}
+      </AnimatePresence>
     </form>
   );
 }
