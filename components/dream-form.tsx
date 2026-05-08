@@ -159,11 +159,6 @@ export function DreamForm() {
           <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">
             <TypewriterText text={state.interpretation} />
           </p>
-          <p className="text-xs text-zinc-400">
-            {state.saved
-              ? "Supabase'e başarıyla kaydedildi."
-              : "Sadece ekranda gösterildi (veritabanı kaydı yok)."}
-          </p>
         </motion.div>
       ) : null}
       </AnimatePresence>
