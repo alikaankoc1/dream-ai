@@ -96,12 +96,9 @@ export default function Home() {
         </section>
       </main>
       <footer className="relative mt-2 border-t border-[#5f4aa0]/40 bg-[#0f0c1f]/45 backdrop-blur-md">
-        <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 py-5 text-sm text-zinc-300 sm:px-6 md:grid-cols-3 md:items-center md:px-10">
+        <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 py-5 text-sm text-zinc-300 sm:px-6 md:grid-cols-2 md:items-center md:px-10">
           <p className="text-center md:text-left">
-            © 2024 Ali Kaan Koç | DreamAI
-          </p>
-          <p className="text-center text-zinc-400">
-            Built with Next.js, Supabase & Gemini AI
+            © 2026 Ali Kaan Koç | DreamAI
           </p>
           <div className="flex items-center justify-center gap-2 md:justify-end">
             <a
