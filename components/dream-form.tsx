@@ -18,7 +18,7 @@ function SubmitButton() {
       className="h-11 w-full rounded-xl bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-sm font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60 sm:h-12 sm:text-base"
     >
       <WandSparkles className="mr-2 h-5 w-5" />
-      {pending ? "Yukleniyor..." : "Ruyami Yorumla"}
+      {pending ? "Yükleniyor..." : "Rüyamı Yorumla"}
     </Button>
   );
 }
@@ -43,7 +43,7 @@ export function DreamForm() {
         required
         minLength={10}
         className="min-h-40 resize-none rounded-xl border-[#5b4a92] bg-[#120f26] px-4 py-3 text-lg leading-relaxed font-medium text-zinc-50 placeholder:text-zinc-400 caret-[#d4c3ff] focus-visible:border-[#9f79ff] focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-xl md:text-2xl"
-        placeholder="Bu gece gordugun ruyayi detaylariyla yaz..."
+        placeholder="Bu gece gördüğün rüyayı detaylarıyla yaz..."
       />
       <SubmitButton />
 
@@ -68,8 +68,8 @@ export function DreamForm() {
           </p>
           <p className="text-xs text-zinc-400">
             {state.saved
-              ? "Supabase'e basariyla kaydedildi."
-              : "Sadece ekranda gosterildi (veritabani kaydi yok)."}
+              ? "Supabase'e başarıyla kaydedildi."
+              : "Sadece ekranda gösterildi (veritabanı kaydı yok)."}
           </p>
         </div>
       ) : null}

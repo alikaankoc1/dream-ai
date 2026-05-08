@@ -24,7 +24,7 @@ type GeminiDreamResponse = {
 const FALLBACK_INSIGHT: DreamInsight = {
   category: "Bilinmeyen",
   interpretation:
-    "Bu ruyayi su an net yorumlayamadim. Biraz daha detay eklersen daha iyi bir analiz sunabilirim.",
+    "Bu rüyayı şu an net yorumlayamadım. Biraz daha detay eklersen daha iyi bir analiz sunabilirim.",
 };
 
 const DEFAULT_MODEL_CANDIDATES = [
@@ -68,7 +68,7 @@ export async function analyzeDreamWithGemini({
   dreamText,
 }: AnalyzeDreamInput): Promise<DreamInsight> {
   if (!dreamText.trim()) {
-    throw new Error("Ruya metni bos olamaz.");
+    throw new Error("Rüya metni boş olamaz.");
   }
 
   const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
@@ -83,15 +83,15 @@ export async function analyzeDreamWithGemini({
     : DEFAULT_MODEL_CANDIDATES;
 
   const prompt = `
-Sen bilge bir ruya yorumcususun. Sadece gecerli JSON dondur, ekstra metin ekleme.
+Sen bilge bir rüya yorumcususun. Sadece geçerli JSON döndür, ekstra metin ekleme.
 
-JSON semasi:
+JSON şeması:
 {
   "category": "Kisisel Gelisim | Kaygi | Iliski | Spirituel | Bilinmeyen",
-  "interpretation": "2-4 cumlelik derin ama kibar bir ruya yorumu"
+  "interpretation": "2-4 cümlelik derin ama kibar bir rüya yorumu"
 }
 
-Ruya:
+Rüya:
 """${dreamText}"""
 `;
 
@@ -119,5 +119,5 @@ Ruya:
 
   throw lastError instanceof Error
     ? lastError
-    : new Error("Gemini modeline erisilemedi.");
+    : new Error("Gemini modeline erişilemedi.");
 }

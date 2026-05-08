@@ -26,7 +26,7 @@ export default function Home() {
               Rüyalarını Yapay Zeka ile Anlamlandır
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base md:text-lg">
-              Rüyanı yaz, DreamAI sembolleri analiz etsin, kategorize etsin ve
+              Rüyanı yaz, yapay zeka sembolleri analiz etsin, kategorize etsin ve
               sana derin bir yorum sunsun.
             </p>
           </div>
@@ -36,7 +36,7 @@ export default function Home() {
         <section className="space-y-5">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-white sm:text-2xl">
             <Stars className="h-5 w-5 text-[#efc66a]" />
-            Ornek Ruyalar
+            Örnek Rüyalar
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sampleDreams.map((dream, index) => (
@@ -47,7 +47,7 @@ export default function Home() {
               <CardHeader className="pb-2 sm:pb-3">
                 <CardTitle className="flex items-center gap-2 text-base text-[#f3d486]">
                   <Stars className="h-4 w-4" />
-                  Ornek Ruya {index + 1}
+                  Örnek Rüya {index + 1}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm leading-relaxed text-zinc-300">
@@ -61,21 +61,21 @@ export default function Home() {
         <section className="rounded-2xl border border-[#2f2a50] bg-[#0f0c1f]/85 p-4 sm:rounded-3xl sm:p-6 md:p-10">
           <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-white sm:mb-6 sm:text-2xl">
             <Sparkles className="h-5 w-5 text-[#efc66a]" />
-            Nasil Calisir?
+            Nasıl Çalışır?
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                title: "1. Ruyani Paylas",
-                text: "Ruyani serbest metin olarak yaz ve detaylari ekle.",
+                title: "1. Rüyanı Paylaş",
+                text: "Rüyanı serbest metin olarak yaz ve detayları ekle.",
               },
               {
-                title: "2. AI Kategorize Etsin",
-                text: "DreamAI ruyani tema, duygu ve sembollere gore siniflandirir.",
+                title: "2. Yapay Zeka Kategorize Etsin",
+                text: "Yapay zeka rüyanı tema, duygu ve sembollere göre sınıflandırır.",
               },
               {
-                title: "3. Yorumu Kesfet",
-                text: "Gemini tabanli yorum motoru sana anlamli bir ozet ve yorum sunar.",
+                title: "3. Yorumu Keşfet",
+                text: "Gemini tabanlı yorum motoru sana anlamlı bir özet ve yorum sunar.",
               },
             ].map((item) => (
               <Card

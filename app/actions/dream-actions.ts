@@ -20,7 +20,7 @@ export async function submitDreamAction(
     return {
       interpretation: "",
       category: "",
-      error: "Lutfen bir ruya metni gir.",
+      error: "Lütfen bir rüya metni gir.",
       saved: false,
     };
   }
@@ -38,7 +38,7 @@ export async function submitDreamAction(
       return {
         interpretation: dreamInsight.interpretation,
         category: dreamInsight.category,
-        error: `Yorum uretildi, fakat veritabani kaydi sirasinda bir sorun yasandi. (${error.message})`,
+        error: `Yorum üretildi, fakat veritabanı kaydı sırasında bir sorun yaşandı. (${error.message})`,
         saved: false,
       };
     }
@@ -53,12 +53,12 @@ export async function submitDreamAction(
     const errorMessage =
       error instanceof Error
         ? error.message
-        : "Yorum olusturulurken beklenmeyen bir sorun olustu.";
+        : "Yorum oluşturulurken beklenmeyen bir sorun oluştu.";
 
     return {
       interpretation: "",
       category: "",
-      error: `Su an yorum olusturulamadi. Lutfen tekrar dene. (${errorMessage})`,
+      error: `Şu an yorum oluşturulamadı. Lütfen tekrar dene. (${errorMessage})`,
       saved: false,
     };
   }

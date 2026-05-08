@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DreamAI",
   description:
-    "DreamAI ile ruyalarini yaz, yapay zeka ile kategorize et ve anlamli yorumlar kesfet.",
+    "DreamAI ile rüyalarını yaz, yapay zeka ile kategorize et ve anlamlı yorumlar keşfet.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="tr"
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
