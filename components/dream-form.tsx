@@ -131,7 +131,7 @@ export function DreamForm() {
         name="dreamText"
         required
         minLength={10}
-        className="min-h-40 resize-none rounded-xl border-[#5b4a92] bg-[#120f26] px-4 py-3 text-lg leading-relaxed font-medium text-zinc-50 placeholder:text-zinc-400 caret-[#d4c3ff] focus-visible:border-[#9f79ff] focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-xl md:text-2xl"
+        className="min-h-40 resize-none rounded-xl border-[#5b4a92] bg-[#120f26] px-4 py-3 text-lg leading-relaxed font-medium text-zinc-50 placeholder:text-base placeholder:text-zinc-400 caret-[#d4c3ff] focus-visible:border-[#9f79ff] focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-xl sm:placeholder:text-lg md:text-2xl md:placeholder:text-xl"
         placeholder="Bu gece gördüğün rüyayı detaylarıyla yaz..."
       />
       <SubmitButton />
