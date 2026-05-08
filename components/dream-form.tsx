@@ -42,7 +42,7 @@ export function DreamForm() {
         name="dreamText"
         required
         minLength={10}
-        className="min-h-40 resize-none rounded-xl border-[#3f3268] bg-[#0f0c1f]/85 px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-base"
+        className="min-h-40 resize-none rounded-xl border-[#5b4a92] bg-[#120f26] px-4 py-3 text-lg leading-relaxed font-medium text-zinc-50 placeholder:text-zinc-400 caret-[#d4c3ff] focus-visible:border-[#9f79ff] focus-visible:ring-[#9f79ff] sm:min-h-52 sm:text-xl md:text-2xl"
         placeholder="Bu gece gordugun ruyayi detaylariyla yaz..."
       />
       <SubmitButton />
