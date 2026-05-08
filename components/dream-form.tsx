@@ -153,7 +153,7 @@ export function DreamForm() {
           className={`space-y-3 rounded-xl border bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 sm:rounded-2xl sm:p-5 ${currentMoodStyle.border} ${currentMoodStyle.glow}`}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="font-serif text-xl font-semibold tracking-tight text-[#f8f4ff] sm:text-2xl">
+            <h3 className="text-xl font-semibold tracking-tight text-[#f8f4ff] sm:text-2xl">
               Yorum Sonucu
             </h3>
             <div className="flex flex-wrap items-center gap-2">
@@ -165,7 +165,7 @@ export function DreamForm() {
             ) : null}
             </div>
           </div>
-          <p className="font-serif text-base leading-relaxed text-zinc-100 sm:text-xl">
+          <p className="text-base leading-relaxed text-zinc-100 sm:text-xl">
             <TypewriterText text={state.interpretation} />
           </p>
         </motion.div>
