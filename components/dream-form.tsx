@@ -1,13 +1,14 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { toPng } from "html-to-image";
 import { submitDreamAction, type DreamActionState } from "@/app/actions/dream-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { WandSparkles } from "lucide-react";
+import { Download, WandSparkles } from "lucide-react";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -118,12 +119,39 @@ export function DreamForm() {
     submitDreamAction,
     initialDreamActionState
   );
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const shareCardRef = useRef<HTMLDivElement>(null);
   const currentMoodStyle =
     moodStyles[state.mood] ?? moodStyles["Gizem / Bilinmezlik"];
   const interpretationKey = useMemo(
     () => `${state.category}-${state.mood}-${state.interpretation}`,
     [state.category, state.mood, state.interpretation]
   );
+
+  async function handleShareDownload() {
+    if (!shareCardRef.current || !state.interpretation) return;
+
+    setDownloadError(null);
+    setIsDownloading(true);
+
+    try {
+      const dataUrl = await toPng(shareCardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+      });
+
+      const timestamp = new Date().toISOString().slice(0, 10);
+      const link = document.createElement("a");
+      link.download = `dreamai-ruya-${timestamp}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch {
+      setDownloadError("Görsel oluşturulamadı. Lütfen tekrar dene.");
+    } finally {
+      setIsDownloading(false);
+    }
+  }
 
   return (
     <form action={formAction} className="mt-6 space-y-3 sm:mt-8 sm:space-y-4">
@@ -139,6 +167,11 @@ export function DreamForm() {
       {state.error ? (
         <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
           {state.error}
+        </p>
+      ) : null}
+      {downloadError ? (
+        <p className="rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+          {downloadError}
         </p>
       ) : null}
 
@@ -157,20 +190,69 @@ export function DreamForm() {
               Yorum Sonucu
             </h3>
             <div className="flex flex-wrap items-center gap-2">
-            <Badge className="h-8 px-3 text-sm font-semibold tracking-wide border-[#efc66a]/60 bg-[#efc66a]/18 text-[#ffefc6] shadow-[0_0_18px_rgba(239,198,106,0.35)]">
-              {state.category}
-            </Badge>
-            {state.mood ? (
-              <Badge className={currentMoodStyle.badge}>{state.mood}</Badge>
-            ) : null}
+              <Badge className="h-8 px-3 text-sm font-semibold tracking-wide border-[#efc66a]/60 bg-[#efc66a]/18 text-[#ffefc6] shadow-[0_0_18px_rgba(239,198,106,0.35)]">
+                {state.category}
+              </Badge>
+              {state.mood ? (
+                <Badge className={currentMoodStyle.badge}>{state.mood}</Badge>
+              ) : null}
             </div>
           </div>
+
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              onClick={handleShareDownload}
+              disabled={isDownloading}
+              className="h-10 rounded-lg border border-[#3f3268] bg-[#1a1533]/90 px-4 text-sm font-semibold text-zinc-100 hover:bg-[#231c45]"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              {isDownloading ? "Hazırlanıyor..." : "Görsel Olarak İndir"}
+            </Button>
+            </div>
           <p className="text-base leading-relaxed text-zinc-100 sm:text-xl">
             <TypewriterText text={state.interpretation} />
           </p>
         </motion.div>
       ) : null}
       </AnimatePresence>
+
+      {state.interpretation ? (
+        <div className="pointer-events-none fixed -left-[9999px] top-0">
+          <div
+            ref={shareCardRef}
+            className="relative h-[1920px] w-[1080px] overflow-hidden bg-[#090714] text-zinc-100"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(99,70,175,0.45),_transparent_52%),radial-gradient(circle_at_78%_24%,_rgba(26,74,140,0.35),_transparent_45%)]" />
+            <div className="relative flex h-full flex-col p-16">
+              <div className={`rounded-[44px] border bg-gradient-to-b from-[#120f24]/95 to-[#0c0a18]/95 p-12 ${currentMoodStyle.border} ${currentMoodStyle.glow}`}>
+                <p className="text-2xl font-semibold tracking-[0.2em] text-[#efc66a]">
+                  DREAMAI
+                </p>
+                <h3 className="mt-4 text-6xl font-bold leading-tight text-white">
+                  Rüya Yorumu
+                </h3>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Badge className="h-10 px-4 text-base font-semibold border-[#efc66a]/60 bg-[#efc66a]/16 text-[#ffefc6]">
+                    {state.category}
+                  </Badge>
+                  {state.mood ? (
+                    <Badge className={`h-10 px-4 text-base font-semibold ${currentMoodStyle.badge}`}>
+                      {state.mood}
+                    </Badge>
+                  ) : null}
+                </div>
+                <p className="mt-10 text-[44px] leading-[1.45] text-zinc-100">
+                  {state.interpretation}
+                </p>
+              </div>
+              <p className="mt-auto text-center text-2xl tracking-wide text-zinc-400">
+                dreamai | rüyalarını anlamlandır
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </form>
   );
 }

@@ -94,6 +94,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+
       </main>
       <footer className="relative mt-2 border-t border-[#5f4aa0]/40 bg-[#0f0c1f]/45 backdrop-blur-md">
         <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 py-5 text-sm text-zinc-300 sm:px-6 md:grid-cols-2 md:items-center md:px-10">
