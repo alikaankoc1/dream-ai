@@ -95,6 +95,48 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <footer className="relative mt-2 border-t border-[#5f4aa0]/40 bg-[#0f0c1f]/45 backdrop-blur-md">
+        <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 py-5 text-sm text-zinc-300 sm:px-6 md:grid-cols-3 md:items-center md:px-10">
+          <p className="text-center md:text-left">
+            © 2024 Ali Kaan Koç | DreamAI
+          </p>
+          <p className="text-center text-zinc-400">
+            Built with Next.js, Supabase & Gemini AI
+          </p>
+          <div className="flex items-center justify-center gap-2 md:justify-end">
+            <a
+              href="https://github.com/alikaankoc1"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub profili"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#3b2f63] bg-[#15112b]/70 text-zinc-200 transition hover:border-[#7f63d4] hover:text-white"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="h-4 w-4 fill-current"
+              >
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.426 2.865 8.181 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.455-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.071 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.091-.648.349-1.088.635-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.481A10.018 10.018 0 0022 12.017C22 6.484 17.523 2 12 2z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/alikaankoc/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn profili"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#3b2f63] bg-[#15112b]/70 text-zinc-200 transition hover:border-[#7f63d4] hover:text-white"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="h-4 w-4 fill-current"
+              >
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.026-3.037-1.852-3.037-1.854 0-2.137 1.445-2.137 2.939v5.667H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.369-1.85 3.599 0 4.264 2.368 4.264 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065a2.064 2.064 0 114.127 0 2.065 2.065 0 01-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
