@@ -15,9 +15,9 @@ function SubmitButton() {
     <Button
       type="submit"
       disabled={pending}
-      className="h-11 w-full rounded-xl bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-sm font-semibold text-[#090714] transition hover:opacity-95 disabled:opacity-60 sm:h-12 sm:text-base"
+      className="h-12 w-full rounded-xl bg-gradient-to-r from-[#7750ff] via-[#4f6ad6] to-[#efc66a] text-base font-bold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] transition hover:opacity-95 disabled:opacity-60 sm:h-14 sm:text-lg"
     >
-      <WandSparkles className="mr-2 h-5 w-5" />
+      <WandSparkles className="mr-2 h-6 w-6" />
       {pending ? "Yükleniyor..." : "Rüyamı Yorumla"}
     </Button>
   );
