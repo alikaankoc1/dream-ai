@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export type DreamCategory =
-  | "Kisisel Gelisim"
-  | "Kaygi"
-  | "Iliski"
-  | "Spirituel"
+  | "Kişisel Gelişim"
+  | "Kaygı"
+  | "İlişki"
+  | "Spiritüel"
   | "Bilinmeyen";
 
 export type DreamInsight = {
@@ -37,18 +37,32 @@ const DEFAULT_MODEL_CANDIDATES = [
 ];
 
 function sanitizeCategory(rawCategory?: string): DreamCategory {
-  const allowed: DreamCategory[] = [
-    "Kisisel Gelisim",
-    "Kaygi",
-    "Iliski",
-    "Spirituel",
-    "Bilinmeyen",
-  ];
-
   if (!rawCategory) return "Bilinmeyen";
-  return allowed.includes(rawCategory as DreamCategory)
-    ? (rawCategory as DreamCategory)
-    : "Bilinmeyen";
+
+  const normalized = rawCategory
+    .toLocaleLowerCase("tr-TR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (normalized.includes("kisisel") && normalized.includes("gelisim")) {
+    return "Kişisel Gelişim";
+  }
+  if (normalized.includes("kaygi")) {
+    return "Kaygı";
+  }
+  if (normalized.includes("iliski")) {
+    return "İlişki";
+  }
+  if (normalized.includes("spirituel")) {
+    return "Spiritüel";
+  }
+  if (normalized.includes("bilinmeyen")) {
+    return "Bilinmeyen";
+  }
+
+  return "Bilinmeyen";
 }
 
 function parseGeminiJson(text: string): GeminiDreamResponse | null {
@@ -90,7 +104,7 @@ Sen bilge bir rüya yorumcususun. Sadece geçerli JSON döndür, ekstra metin ek
 
 JSON şeması:
 {
-  "category": "Kisisel Gelisim | Kaygi | Iliski | Spirituel | Bilinmeyen",
+  "category": "Kişisel Gelişim | Kaygı | İlişki | Spiritüel | Bilinmeyen",
   "mood": "Kaygı / Endişe | Huzur / Mutluluk | Korku / Kabus | Gizem / Bilinmezlik | Aşk / Romantizm | Yalnızlık / Hüzün | Macera / Heyecan | Aydınlanma / Farkındalık | Nostalji / Özlem",
   "interpretation": "2-4 cümlelik derin ama kibar bir rüya yorumu"
 }
