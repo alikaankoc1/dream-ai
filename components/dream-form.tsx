@@ -52,47 +52,56 @@ const moodStyles: Record<string, { border: string; glow: string; badge: string }
   "Kaygı / Endişe": {
     border: "border-[#7f63d4]",
     glow: "shadow-[0_0_32px_rgba(127,99,212,0.35)]",
-    badge: "border-[#b499ff]/50 bg-[#b499ff]/10 text-[#d3c1ff]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#b499ff]/60 bg-[#b499ff]/18 text-[#ece2ff] shadow-[0_0_18px_rgba(180,153,255,0.35)]",
   },
   "Huzur / Mutluluk": {
     border: "border-[#e5b95e]",
     glow: "shadow-[0_0_32px_rgba(229,185,94,0.32)]",
-    badge: "border-[#f3d486]/50 bg-[#f3d486]/10 text-[#f7e2aa]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#f3d486]/60 bg-[#f3d486]/18 text-[#ffefc6] shadow-[0_0_18px_rgba(243,212,134,0.35)]",
   },
   "Korku / Kabus": {
     border: "border-[#a23d55]",
     glow: "shadow-[0_0_32px_rgba(162,61,85,0.35)]",
-    badge: "border-[#dd7088]/50 bg-[#dd7088]/10 text-[#f2adbb]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#dd7088]/60 bg-[#dd7088]/18 text-[#ffd5dd] shadow-[0_0_18px_rgba(221,112,136,0.35)]",
   },
   "Gizem / Bilinmezlik": {
     border: "border-[#2f93b0]",
     glow: "shadow-[0_0_32px_rgba(47,147,176,0.35)]",
-    badge: "border-[#63c9e5]/50 bg-[#63c9e5]/10 text-[#a6e7f8]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#63c9e5]/60 bg-[#63c9e5]/18 text-[#d1f4ff] shadow-[0_0_18px_rgba(99,201,229,0.35)]",
   },
   "Aşk / Romantizm": {
     border: "border-[#c27c9c]",
     glow: "shadow-[0_0_32px_rgba(194,124,156,0.35)]",
-    badge: "border-[#e5aac6]/50 bg-[#e5aac6]/10 text-[#f6d3e3]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#e5aac6]/60 bg-[#e5aac6]/18 text-[#ffe4f0] shadow-[0_0_18px_rgba(229,170,198,0.35)]",
   },
   "Yalnızlık / Hüzün": {
     border: "border-[#8c94b8]",
     glow: "shadow-[0_0_32px_rgba(140,148,184,0.32)]",
-    badge: "border-[#b0b8de]/50 bg-[#b0b8de]/10 text-[#d3d8ef]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#b0b8de]/60 bg-[#b0b8de]/18 text-[#edf0ff] shadow-[0_0_18px_rgba(176,184,222,0.35)]",
   },
   "Macera / Heyecan": {
     border: "border-[#d87f3f]",
     glow: "shadow-[0_0_32px_rgba(216,127,63,0.35)]",
-    badge: "border-[#f3a56d]/50 bg-[#f3a56d]/10 text-[#ffd1ac]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#f3a56d]/60 bg-[#f3a56d]/18 text-[#ffe2c9] shadow-[0_0_18px_rgba(243,165,109,0.35)]",
   },
   "Aydınlanma / Farkındalık": {
     border: "border-[#d6d6e8]",
     glow: "shadow-[0_0_32px_rgba(214,214,232,0.35)]",
-    badge: "border-[#eeeeff]/60 bg-[#eeeeff]/10 text-[#f8f8ff]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#eeeeff]/70 bg-[#eeeeff]/18 text-[#ffffff] shadow-[0_0_18px_rgba(238,238,255,0.35)]",
   },
   "Nostalji / Özlem": {
     border: "border-[#9b7a62]",
     glow: "shadow-[0_0_32px_rgba(155,122,98,0.35)]",
-    badge: "border-[#c6a58d]/50 bg-[#c6a58d]/10 text-[#e8d4c4]",
+    badge:
+      "h-8 px-3 text-sm font-semibold tracking-wide border-[#c6a58d]/60 bg-[#c6a58d]/18 text-[#f4e6da] shadow-[0_0_18px_rgba(198,165,141,0.35)]",
   },
 };
 
@@ -144,11 +153,11 @@ export function DreamForm() {
           className={`space-y-3 rounded-xl border bg-gradient-to-b from-[#120f24] to-[#0c0a18] p-4 sm:rounded-2xl sm:p-5 ${currentMoodStyle.border} ${currentMoodStyle.glow}`}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="text-base font-semibold text-white sm:text-lg">
+            <h3 className="font-serif text-xl font-semibold tracking-tight text-[#f8f4ff] sm:text-2xl">
               Yorum Sonucu
             </h3>
             <div className="flex flex-wrap items-center gap-2">
-            <Badge className="border-[#efc66a]/50 bg-[#efc66a]/10 text-[#f3d486]">
+            <Badge className="h-8 px-3 text-sm font-semibold tracking-wide border-[#efc66a]/60 bg-[#efc66a]/18 text-[#ffefc6] shadow-[0_0_18px_rgba(239,198,106,0.35)]">
               {state.category}
             </Badge>
             {state.mood ? (
@@ -156,7 +165,7 @@ export function DreamForm() {
             ) : null}
             </div>
           </div>
-          <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">
+          <p className="font-serif text-base leading-relaxed text-zinc-100 sm:text-xl">
             <TypewriterText text={state.interpretation} />
           </p>
         </motion.div>

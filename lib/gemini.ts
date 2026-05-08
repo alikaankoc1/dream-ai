@@ -33,7 +33,7 @@ const FALLBACK_INSIGHT: DreamInsight = {
 const DEFAULT_MODEL_CANDIDATES = [
   "gemini-2.0-flash",
   "gemini-2.5-flash",
-  "gemini-1.5-flash-latest",
+  "gemini-1.5-flash",
 ];
 
 function sanitizeCategory(rawCategory?: string): DreamCategory {
@@ -122,7 +122,21 @@ Rüya:
     }
   }
 
-  throw lastError instanceof Error
-    ? lastError
-    : new Error("Gemini modeline erişilemedi.");
+  // Tüm aday modeller başarısız olursa akışı kırmak yerine
+  // kullanıcıya güvenli bir fallback yorum göster.
+  if (lastError instanceof Error) {
+    const errorMessage = lastError.message;
+    const modelNotFound =
+      errorMessage.includes("404") ||
+      errorMessage.includes("not found") ||
+      errorMessage.includes("is not supported for generateContent");
+
+    if (modelNotFound) {
+      return FALLBACK_INSIGHT;
+    }
+
+    throw lastError;
+  }
+
+  return FALLBACK_INSIGHT;
 }
