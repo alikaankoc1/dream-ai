@@ -11,6 +11,30 @@ export type DreamActionState = {
   saved: boolean;
 };
 
+function isLikelyDreamText(input: string): boolean {
+  const cleaned = input.trim().toLocaleLowerCase("tr-TR");
+  if (cleaned.length < 20) return false;
+
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (words.length < 3) return false;
+
+  const lettersOnly = cleaned.replace(/[^a-zçğıöşü]/g, "");
+  if (lettersOnly.length < 15) return false;
+
+  const vowelMatches = lettersOnly.match(/[aeıioöuü]/g) ?? [];
+  const vowelRatio = vowelMatches.length / lettersOnly.length;
+  if (vowelRatio < 0.2 || vowelRatio > 0.8) return false;
+
+  // Rastgele klavye girdilerinde sık görülen uzun ünsüz dizilerini engeller.
+  if (/[bcçdfgğhjklmnprsştvyz]{6,}/i.test(cleaned)) return false;
+  if (/(.)\1{3,}/.test(cleaned)) return false;
+
+  const meaningfulWordCount = words.filter(
+    (word) => word.length >= 2 && /[aeıioöuü]/i.test(word)
+  ).length;
+  return meaningfulWordCount / words.length >= 0.7;
+}
+
 export async function submitDreamAction(
   _prevState: DreamActionState,
   formData: FormData
@@ -23,6 +47,17 @@ export async function submitDreamAction(
       category: "",
       mood: "",
       error: "Lütfen bir rüya metni gir.",
+      saved: false,
+    };
+  }
+
+  if (!isLikelyDreamText(dreamText)) {
+    return {
+      interpretation: "",
+      category: "",
+      mood: "",
+      error:
+        "Lütfen daha anlaşılır ve detaylı bir rüya metni yaz. Rastgele harflerden oluşan girdiler yorumlanamaz.",
       saved: false,
     };
   }
