@@ -64,30 +64,28 @@ export async function submitDreamAction(
 
   try {
     const dreamInsight = await analyzeDreamWithGemini({ dreamText });
-    const supabase = createServerSupabaseClient();
-    const { error } = await supabase.from("dreams").insert({
-      dream_text: dreamText,
-      interpretation: dreamInsight.interpretation,
-      category: dreamInsight.category,
-    });
 
-    if (error) {
-      return {
-        interpretation: dreamInsight.interpretation,
-        category: dreamInsight.category,
-        mood: dreamInsight.mood,
-        error: `Yorum üretildi, fakat veritabanı kaydı sırasında bir sorun yaşandı. (${error.message})`,
-        saved: false,
-      };
-    }
-
-    return {
+    const result: DreamActionState = {
       interpretation: dreamInsight.interpretation,
       category: dreamInsight.category,
       mood: dreamInsight.mood,
       error: null,
-      saved: true,
+      saved: false,
     };
+
+    try {
+      const supabase = createServerSupabaseClient();
+      const { error } = await supabase.from("dreams").insert({
+        dream_text: dreamText,
+        interpretation: dreamInsight.interpretation,
+        category: dreamInsight.category,
+      });
+      result.saved = !error;
+    } catch {
+      // Kayıt başarısız; yorum yine de gösterilir.
+    }
+
+    return result;
   } catch (error) {
     const errorMessage =
       error instanceof Error
